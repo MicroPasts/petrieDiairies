@@ -1,0 +1,120 @@
+<div id="modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h3 class="lead">Flinders Petrie's diary for 1884 - 1885</h3>
+            </div>
+
+            <div id="0" class="modal-body" style="display:none">
+                <img src="http://micropasts-other.s3.amazonaws.com/other/Petrie-Logo.png" class="pull-right"/>
+
+                <p>
+                    This is a very simple application for the crowd-sourcing of data from Sir Flinders Petrie's field
+                    diary for 1884 - 1885. This project is on behalf of the Petrie Museum, University College London.
+                    transcribe. Within this project, all we need is the daily entries to be transcribed for the appropriate
+                    day within each diary page. The biggest challenge for you, is to decipher Sir Flinders Petrie's
+                    handwriting! However there is a caveat for this task.
+                </p>
+                <p>
+                    Flinders Petrie was infamously frugal. He only had one pocket diary for each excavation season.
+                    A season started in late Autumn/early Winter (October or November) which is when he would start a 'new diary'.
+                    So for 1883-1884 he used an 1884 diary and merely changed the date of entries for the 1883 months and
+                    carried on using the same diary.
+                </p>
+
+            </div>
+
+            <div id="1" class="modal-body" style="display:none">
+                <p>
+                    For each page of the diary, only 4 entries are entered per page. We would like you to capture 2 things
+                    for each entry:
+                <ol>
+                    <li>Date of entry (falls within either 1884 or 1885)</li>
+                    <li>The text for each entry</li>
+                </ol>
+
+                <p>
+                    That seems simple!
+                </p>
+            </div>
+
+            <div id="2" class="modal-body" style="display:none">
+                <p>
+                    Dates are entered in the format dd/mm/yyyy and to assist you, a simple javascript powered date picker
+                    has been incorporated. To activate this, click on the icon as shown in the image below:
+                </p>
+
+                <img src="https://micropasts-petrie.s3.amazonaws.com/applicationImages/datepicker.png" width="200px"/>
+                <p>
+                    This brings up an overlay window such as the below. Click on the month and then the day:
+                </p>
+
+                <img src="https://micropasts-petrie.s3.amazonaws.com/applicationImages/calendar.png" height="200px"/>
+
+                <p>
+                    Once activated, choose the year, month and date for the appropriate entry. Then in the text box below
+                    enter your transcription of Sir Flinders' handwriting. Hopefully you can read it!
+                </p>
+            </div>
+
+            <div id="3" class="modal-body" style="display:none">
+                <p>
+                    Finally, after repeating the process 4 times, you may have comments on the page. Maybe other text,
+                    general comment, etc. If you do just enter it into the comments box. If you find it hard to decipher a
+                    word, then use the notation below for text:
+                </p>
+                <blockquote>
+                    <p>
+                        [...]
+                    </p>
+                </blockquote>
+                <p>
+                   And if it is a name you cannot work out:
+                </p>
+                 <blockquote>
+                    <p>
+                        [name?]
+                    </p>
+                </blockquote>
+            </div>
+
+            <div class="modal-footer">
+                <a id="prevBtn" href="#" onclick="showStep('prev')" class="btn btn-default">Previous</a>
+                <a id="nextBtn" href="#" onclick="showStep('next')" class="btn btn-success">Next</a>
+                <a id="startContrib" href="../petrie8485/newtask" class="btn btn-primary" style="display:none"><i
+                        class="glyphicon glyphicon-thumbs-up"></i> Let's start!</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var step = -1;
+    function showStep(action) {
+        $("#" + step).hide();
+        if (action == 'next') {
+            step = step + 1;
+        }
+        if (action == 'prev') {
+            step = step - 1;
+        }
+        if (step == 0) {
+            $("#prevBtn").hide();
+        }
+        else {
+            $("#prevBtn").show();
+        }
+
+        if (step == 3 ) {
+            $("#nextBtn").hide();
+            $("#startContrib").show();
+        }
+        $("#" + step).show();
+    }
+
+    showStep('next');
+    $("#modal").modal('show');
+
+</script>

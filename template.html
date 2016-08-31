@@ -1,0 +1,544 @@
+<link type="text/css" rel="stylesheet" href="http://annotorious.github.io/latest/themes/dark/annotorious-dark.css"/>
+<link rel="stylesheet" href="/static/vendor/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen"/>
+
+<!-- Fancy box script -->
+<script src="/static/vendor/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+<!-- jQuery cookie -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.0/jquery.cookie.min.js" type="text/javascript"></script>
+
+<!-- jquery ui -->
+<script src="https://code.jquery.com/ui/1.8.1/jquery-ui.min.js" type="text/javascript"></script>
+
+<!-- jquery form serializer -->
+<script src="/static/js/vendor/jquery.serializeJSON.min.js" type="text/javascript"></script>
+
+<link href="/static/vendor/zoom/css/zoom.css" rel="stylesheet" type="text/css" media="screen">
+<script src="/static/vendor/zoom/js/zoom.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/transition.js"
+        type="text/javascript"></script>
+<script src="/static/vendor/datepicker/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/static/vendor/datepicker/css/bootstrap-datepicker3.css" type="text/css" media="screen">
+
+<div id="survey" class="modal fade" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Do you want to help us further?</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Thank you for contributing one task for the project.
+                    We are interested in knowing how you found out about us.
+                </p>
+
+                <p>
+                    Could you please answer two questions in a short survey?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Skip</button>
+                <a class="btn btn-large btn-success"
+                   href="https://docs.google.com/forms/d/1Foe1CCfd4K_ZmtX2W8MDsoSjjDi5zd5DLgG7yRVn2HQ/viewform?embedded=true">Of
+                    course! Take me to the survey!</a>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div id="survey25" class="modal fade" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Congratulations! You have completed 25 tasks!</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Thank you for contributing 25 tasks for this particular project. Now that you
+                    have been using MicroPasts for a while, we would like to know how
+                    you found it.
+                </p>
+
+                <p>
+                    Could you please answer a few questions in a short survey?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Skip</button>
+                <a class="btn btn-large btn-success"
+                   href="https://docs.google.com/forms/d/1WTVapZ2Qdq0AIRazG-onDrVYDtb9xAnid7LwLrR3Uqw/viewform?embedded=true">Of
+                    course! Take me to the survey!</a>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div style="display:none;margin-top:15px; height:500px;" id="oldbrowser" class="row">
+    <!-- Success and Error Messages for the user -->
+    <div class="col-md-8 col-md-offset-1 alert alert-info">
+        <h2>
+            Browser problems!
+        </h2>
+
+        <p>
+            Sorry, but your browser does not support the current application.
+            If you want to contribute, please, upgrade to a modern web browser
+            like the open source and free alternative
+            <a href="http://www.mozilla.org/en-US/firefox/new/">Firefox</a> or
+            <a href="https://www.google.com/intl/en/chrome/browser/">Chrome</a>.
+        </p>
+    </div>
+</div>
+<!-- End of Row -->
+
+<div></div>
+
+<div style="margin-top:15px;">
+    <div id="success" class="alert alert-success" style="display:none;">
+        <strong>Well done!</strong> You have successfully submitted your transcription. Here is another to try if you
+        wish!
+    </div>
+    <div id="loading" class="alert alert-info" style="display:none;">
+        <img src="/static/img/loading.gif">Loading next task...
+    </div>
+    <div id="taskcompleted" class="alert alert-info" style="display:none;">
+        <strong>The task has been completed!</strong> Thanks a lot!
+    </div>
+    <div id="finish" class="alert alert-success" style="display:none;">
+        <h2>
+            Congratulations!
+        </h2>
+
+        <p>
+            You have participated in <strong>all</strong> available tasks! Thank you for your interest and help.
+        </p>
+        <br/>
+        <!--<img src="https://crowdfunded.micropasts.org/assets/logo-head.png" width="200" height="200"/>-->
+
+        <div class="alert-actions">
+            <a class="btn-default btn" href="/">Go back</a>
+            <a class="btn-default btn" href="/app">or, Check other applications</a>
+        </div>
+    </div>
+
+    <div id="error" class="alert alert-danger" style="display:none;">
+        <a class="close">X.</a>
+        <strong>Error!</strong> Something went wrong, please contact the site
+        administrators via the forum, Twitter, email or our Facebook page.
+    </div>
+</div> <!-- End Success and Error Messages for the user -->
+
+<!--
+    Task DOM for loading the Flickr Images
+    It uses the class="skeleton" to identify the elements that belong to the
+    task.
+-->
+
+<!-- Start Skeleton Row-->
+<div class="row skeleton">
+
+    <!-- Start of Question and Submission DIV -->
+
+    <!-- The button groups -->
+    <div class="btn-group pull-right">
+        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal"><i
+                class="glyphicon glyphicon-eye-open"></i> Tutorial
+        </button>
+        <a class="btn btn-info btn-sm" id="imgLink" target="_blank" data-toggle="tooltip" data-placement="top"
+           title="Opens in a new window" href="http://community.micropasts.org/category/crowd-sourcing-support"><i
+                class="glyphicon glyphicon-book"></i> Community Help</a>
+        <a id="raw" href="" class="btn btn-sm btn-info fancybox"><i class="glyphicon glyphicon-picture"></i> Overlay</a>
+        <a id="flickr" rel="tooltip" target="_blank" data-toggle="tooltip" data-placement="top"
+           title="Opens in a new window" href="" class="btn btn-sm btn-info"><i class="icon icon-flickr"></i> View on
+            Flickr</a>
+        <a id="down" rel="tooltip" data-toggle="tooltip" data-placement="top" title="Only works for compliant browsers"
+           download="" href="" class="btn btn-sm btn-info"><i class="glyphicon glyphicon-download"></i> Download</a>
+    </div>
+
+    <!-- Annotator section -->
+    <div class="btn-group">
+        <button id="status" type="button" class="btn btn-default btn-type disabled" name="loading" value="loading">
+            Loading photo
+        </button>
+    </div>
+    <div class="row">
+        <!-- Start of Photo DIV (column) -->
+        <div class="col-md-6">
+            <div id="imgContainer">
+             <span id="photo-link">
+                <img id="photo" src="/static/img/loading.gif" class="loadingIcon">
+             </span>
+            </div>
+        </div>
+        <!-- End of Photo DIV (column) -->
+        <div class="col-md-6">
+            <form id="petrieDiary" role="form">
+
+                <strong>Daily entry 1</strong>
+                <div class="input-group date">
+                    <input type="text" class="form-control dateValue" id="day1date"><span class="input-group-addon"><i
+                        class="glyphicon glyphicon-th"></i></span>
+                </div>
+                <div class="form-group">
+                    <textarea rows="2" name="day1text" id="day1text" class="form-control fields"
+                           placeholder="Enter text for first entry on the page"></textarea>
+                </div>
+
+                <hr/>
+
+                <strong>Daily entry 2</strong>
+                <div class="input-group date">
+                    <input type="text" class="form-control dateValue" id="day2date"><span class="input-group-addon"><i
+                        class="glyphicon glyphicon-th"></i></span>
+                </div>
+                <div class="form-group">
+                    <textarea rows="2" name="day2text" id="day2text" class="form-control fields"
+                           placeholder="Enter text for second entry on the page"></textarea>
+                </div>
+
+                <hr/>
+
+                <strong>Daily entry 3</strong>
+                <div class="input-group date">
+                    <input type="text" class="form-control dateValue" id="day3date"><span class="input-group-addon"><i
+                        class="glyphicon glyphicon-th"></i></span>
+                </div>
+                <div class="form-group">
+                    <textarea rows="2" name="day3text" id="day3text" class="form-control fields"
+                           placeholder="Enter text for third entry on the page"></textarea>
+                </div>
+
+                <hr/>
+
+                <strong>Daily entry 4</strong>
+                <div class="input-group date">
+                    <input type="text" class="form-control dateValue" id="day4date"><span class="input-group-addon"><i
+                        class="glyphicon glyphicon-th"></i></span>
+                </div>
+                <div class="form-group">
+                    <textarea rows="2" name="day4text" id="day4text" class="form-control fields"
+                           placeholder="Enter text for fourth entry on the page"></textarea>
+                </div>
+
+                <hr/>
+
+                <div class="form-group">
+                    <label class="control-label" for="comments">Your Comments or any other text to capture</label>
+                    <textarea class="form-control fields" rows="3" id="comments" name="comments"
+                              placeholder="Add any comments you may have about the photo or your experience with this task."></textarea>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-success btn-answer" value='Yes'><i class="icon icon-white icon-save"></i>
+                        Submit your answer
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <!-- Feedback items for the user -->
+    <p>You are working now on task: <span id="task-id" class="label label-warning">#</span></p>
+
+    <p>You have completed: <span id="done" class="label label-info"></span> tasks from
+        <!-- Progress bar for the user -->
+        <span id="total" class="label label-inverse"></span></p>
+
+    <div class="progress progress-striped">
+        <div id="progress" rel="tooltip" title="#" class="progress-bar" role="progressbar" style="width: 0%;"></div>
+    </div>
+    <!-- End of feedback row -->
+
+</div>
+
+
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h3 class="lead">Flinders Petrie's diary for 1884 - 1885</h3>
+            </div>
+
+            <div id="0" class="modal-body" style="display:none">
+                <img src="http://micropasts-other.s3.amazonaws.com/other/Petrie-Logo.png" class="pull-right"/>
+
+                <p>
+                    This is a very simple application for the crowd-sourcing of data from Sir Flinders Petrie's field
+                    diary for 1884 - 1885. This project is on behalf of the Petrie Museum, University College London.
+                    transcribe. Within this project, all we need is the daily entries to be transcribed for the appropriate
+                    day within each diary page. The biggest challenge for you, is to decipher Sir Flinders Petrie's
+                    handwriting! However there is a caveat for this task.
+                </p>
+                <p>
+                    Flinders Petrie was infamously frugal. He only had one pocket diary for each excavation season.
+                    A season started in late Autumn/early Winter (October or November) which is when he would start a 'new diary'.
+
+                </p>
+
+            </div>
+
+            <div id="1" class="modal-body" style="display:none">
+                <p>
+                    For each page of the diary, only 4 entries are entered per page. We would like you to capture 2 things
+                    for each entry:
+                <ol>
+                    <li>Date of entry (falls within either 1884 or 1885)</li>
+                    <li>The text for each entry</li>
+                </ol>
+
+                <p>
+                    That seems simple!
+                </p>
+            </div>
+
+            <div id="2" class="modal-body" style="display:none">
+                <p>
+                    Dates are entered in the format dd/mm/yyyy and to assist you, a simple javascript powered date picker
+                    has been incorporated. To activate this, click on the icon as shown in the image below:
+                </p>
+
+                <img src="https://micropasts-petrie.s3.amazonaws.com/applicationImages/datepicker.png" width="200px"/>
+                <p>
+                    This brings up an overlay window such as the below. Click on the month and then the day:
+                </p>
+
+                <img src="https://micropasts-petrie.s3.amazonaws.com/applicationImages/calendar.png" height="200px"/>
+
+                <p>
+                    Once activated, choose the year, month and date for the appropriate entry. Then in the text box below
+                    enter your transcription of Sir Flinders' handwriting. Hopefully you can read it!
+                </p>
+            </div>
+
+            <div id="3" class="modal-body" style="display:none">
+                <p>
+                    Finally, after repeating the process 4 times, you may have comments on the page. Maybe other text,
+                    general comment, etc. If you do just enter it into the comments box. If you find it hard to decipher a
+                    word, then use the notation below for text:
+                </p>
+                <blockquote>
+                    <p>
+                        [...]
+                    </p>
+                </blockquote>
+                <p>
+                   And if it is a name you cannot work out:
+                </p>
+                 <blockquote>
+                    <p>
+                        [name?]
+                    </p>
+                </blockquote>
+            </div>
+
+            <div class="modal-footer">
+                <a id="prevBtn" href="#" onclick="showStep('prev')" class="btn btn-default">Previous</a>
+                <a id="nextBtn" href="#" onclick="showStep('next')" class="btn btn-success">Next</a>
+                <a id="startContrib" href="../newtask" class="btn btn-primary" style="display:none"><i
+                        class="glyphicon glyphicon-thumbs-up"></i> Let's start!</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- End of skeleton -->
+<script type="text/javascript">
+        $(document).ready(function() {
+            $("#acti").tooltip({
+                placement: $(this).data("placement") || 'top'
+            });
+        });
+
+</script>
+
+<script>
+    var step = -1;
+    function showStep(action) {
+        $("#" + step).hide();
+        if (action == 'next') {
+            step = step + 1;
+        }
+        if (action == 'prev') {
+            step = step - 1;
+        }
+        if (step == 0) {
+            $("#prevBtn").hide();
+        }
+        else {
+            $("#prevBtn").show();
+        }
+
+        if (step == 3 ) {
+            $("#nextBtn").hide();
+            $("#startContrib").show();
+        }
+        $("#" + step).show();
+    }
+
+    showStep('next');
+    $("#modal").modal('show');
+
+    $('.input-group.date').datepicker({
+    format: "dd/mm/yyyy",
+    weekStart: 1,
+    startDate: "01/01/1884",
+    endDate: "31/12/1885",
+    startView: 1,
+    clearBtn: true
+});
+
+</script>
+
+<!-- Client side scripts -->
+<script type="text/javascript ">
+// Quick fix for IE8
+Modernizr.load({
+  test: window.JSON,
+  nope: '/static/js/vendor/json2.min.js'
+});
+
+</script>
+
+<script type="text/javascript">
+    $(window).resize(function(){
+        console.log('Window resized');
+    });
+
+</script>
+
+<!-- Load user progress -->
+<script type="text/javascript">
+    function loadUserProgress() {
+        pybossa.userProgress('petrie8485').done(function(data){
+            console.log("Total answers done for user: " + data.done);
+            var pct = Math.round((data.done*100)/data.total);
+            $("#progress").css("width", pct.toString() +"%");
+            $("#progress").attr("title", pct.toString() + "% completed!");
+            $("#progress").tooltip({'placement': 'left'});
+            $("#total").text(data.total);
+            $("#done").text(data.done);
+            $('a[rel]').tooltip({'placement': 'left'});
+        });
+    }
+
+</script>
+
+<script type="text/javascript">
+    pybossa.taskLoaded(function(task, deferred) {
+        if ( ! $.isEmptyObject(task) ) {
+          var img = $('<img width="100%" style="height:auto;" />');
+            img.load(function() {
+                // continue as soon as the image is loaded
+                deferred.resolve(task);
+                $("#status").text("Photo loaded!");
+            });
+            img.attr('src', task.info.url_b);
+            img.attr('data-action', 'zoom');
+            img.addClass('img-polaroid');
+            task.info.image = img;
+            console.log('Task ID: ' + task.id);
+        }
+        else {
+            deferred.resolve(task);
+        }
+    });
+
+</script>
+
+<script type="text/javascript">
+    pybossa.presentTask(function(task, deferred) {
+        if ( !$.isEmptyObject(task) ) {
+            loadUserProgress();
+            console.log(task);
+            $('#photo-link').html('').append(task.info.image);
+            $('#task-id').html(task.id);
+            $("a#raw").attr("href", task.info.url_b);
+            $("a#flickr").attr("href", task.info.link + '/sizes/k/');
+            $("a#down").attr("download", task.id);
+            $("a#down").attr("href", task.info.url_b );
+            $(".fancybox").fancybox();
+            $('#imgLink').tooltip();
+            $("[rel=tooltip]").tooltip();
+            $('.btn-answer').off('click').on('click', function(evt) {
+                evt.preventDefault();
+                var answer = $(evt.target).attr("value");
+                if (typeof answer != 'undefined') {
+                    task.answer = $("#petrieDiary").serializeJSON();
+                    task.answer.day1date = $('#day1date').val();
+                    task.answer.day1text = $('#day1text').val();
+                    task.answer.day2date = $('#day2date').val();
+                    task.answer.day2text = $('#day2text').val();
+                    task.answer.day3date = $('#day3date').val();
+                    task.answer.day3text = $('#day3text').val();
+                    task.answer.day4date = $('#day4date').val();
+                    task.answer.day4text = $('#day4text').val();
+                    task.answer.comments = $('#comments').val();
+                    console.log(task.answer);
+                    pybossa.saveTask(task.id, task.answer).done(function() {
+                        $("html, body").animate({ scrollTop: 0 }, "slow");
+                        $("#success").fadeIn(500).fadeOut(500);
+                        $("#loading").fadeIn(500).fadeOut(500);
+                        $('.fields').val('');
+                        $('.dateValue').val("");
+                        deferred.resolve();
+                    });
+                } else {
+                    $("#error").show();
+                }
+            });
+            $("#loading").hide();
+        } else {
+            $(".skeleton").hide();
+            $("#loading").hide();
+            $("#finish").fadeIn(500);
+        }
+    });
+    pybossa.run('petrie8485');
+
+</script>
+
+<!-- App specific styles -->
+<style>
+    .messageMargin {
+    margin-top: 15px;
+    }
+    .loadingIcon {
+    max-width:100%;
+    }
+    .none {
+    display:none;
+    }
+    .ui-autocomplete {
+    background-color: white;
+    width: 300px;
+    border: 1px solid #cfcfcf;
+    list-style-type: none;
+    padding: 10px;
+    }
+    .multiselect-container {
+    max-height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    }
+    #map {
+    height:400px;
+    width:100%;
+    margin-top: 15px;
+    }
+    #keywords .btn-group {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    }
+    .row {
+    margin-left: 0px;
+    margin-right: 0px;
+    }
+</style>
